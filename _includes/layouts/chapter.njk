@@ -1,0 +1,8 @@
+---
+layout: layouts/base.njk
+---
+<h1>{{ title }}</h1>
+<p><em>Authored by {{author}}</em></p>
+{{ content | safe }}
+
+<p><a href="{{ '/' | url }}">← Home</a></p>

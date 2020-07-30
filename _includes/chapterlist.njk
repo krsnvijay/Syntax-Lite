@@ -1,0 +1,14 @@
+<ul class="chapter-list">
+{% for chapter in chapterlist %}
+  <li>
+    <a href="{{ chapter.url | url }}">{% if chapter.data.title %}{{ chapter.data.title }}{% else %}<code>{{ chapter.url }}</code>{% endif %}</a>
+    {# <time class="skilllist-date" datetime="{{ skill.date | htmlDateString }}">{{ skill.date | readableDate }}</time> #}
+    {% for tag in chapter.data.tags %}
+      {%- if collections.tagList.indexOf(tag) != -1 -%}
+      {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+      <a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
+      {%- endif -%}
+    {% endfor %}
+  </li>
+{% endfor %}
+</ul>

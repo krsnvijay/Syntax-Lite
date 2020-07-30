@@ -1,0 +1,15 @@
+{
+    "name": "Syntax",
+    "version": "1.0.0",
+    "description": "Learn multiple programming languages at once",
+    "scripts": {
+        "build": "eleventy",
+        "watch": "eleventy --watch",
+        "serve": "eleventy --serve",
+        "debug": "DEBUG=* eleventy"
+    },
+    "devDependencies": {
+        "@11ty/eleventy": "^0.11.0"
+    },
+    "dependencies": {}
+}
