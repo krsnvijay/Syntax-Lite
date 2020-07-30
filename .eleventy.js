@@ -12,6 +12,10 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("css");
     eleventyConfig.addPassthroughCopy("js");
 
+    eleventyConfig.addFilter('jsonify', function(variable) {
+        return JSON.stringify(variable);
+    });
+
     /* Markdown Overrides */
     let markdownLibrary = markdownIt({
         html: true,
@@ -22,6 +26,7 @@ module.exports = function(eleventyConfig) {
         permalinkClass: "direct-link",
         permalinkSymbol: "#"
     });
+
     eleventyConfig.setLibrary("md", markdownLibrary);
     eleventyConfig.setBrowserSyncConfig({
         callbacks: {
