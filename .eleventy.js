@@ -1,10 +1,44 @@
+const fs = require("fs");
+const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+
 module.exports = function(eleventyConfig) {
+    eleventyConfig.addPlugin(pluginSyntaxHighlight);
     eleventyConfig.addCollection("tagList", require("./_11ty/getTagList"));
     eleventyConfig.setDataDeepMerge(true);
     eleventyConfig.addLayoutAlias("chapter", "layouts/chapter.njk");
     eleventyConfig.addPassthroughCopy("img");
     eleventyConfig.addPassthroughCopy("css");
     eleventyConfig.addPassthroughCopy("js");
+
+    /* Markdown Overrides */
+    let markdownLibrary = markdownIt({
+        html: true,
+        breaks: true,
+        linkify: true
+    }).use(markdownItAnchor, {
+        permalink: true,
+        permalinkClass: "direct-link",
+        permalinkSymbol: "#"
+    });
+    eleventyConfig.setLibrary("md", markdownLibrary);
+    eleventyConfig.setBrowserSyncConfig({
+        callbacks: {
+            ready: function(err, browserSync) {
+                const content_404 = fs.readFileSync('_site/404.html');
+
+                browserSync.addMiddleware("*", (req, res) => {
+                    // Provides the 404 content without redirect.
+                    res.write(content_404);
+                    res.end();
+                });
+            },
+        },
+        ui: false,
+        ghostMode: false
+    });
+
     return {
         templateFormats: [
             "md",
